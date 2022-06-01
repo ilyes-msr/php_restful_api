@@ -74,30 +74,18 @@ class Category
     printf("Error: %s.\n", $stmt->error);
     return false;
   }
-  // Update Post
+
+  // Update Category
   public function update() {
-    $query = 'Update ' . $this->table . '
-    SET 
-      title = :title,
-      body = :body,
-      author = :author,
-      category_id = :category_id
-    WHERE
-      id = :id';
+    $query = 'Update ' . $this->table . ' SET name = :name WHERE id = :id';
     $stmt = $this->conn->prepare($query);
 
     // Clean data
-    $this->title = htmlspecialchars(strip_tags($this->title));
-    $this->body = htmlspecialchars(strip_tags($this->body));
-    $this->author = htmlspecialchars(strip_tags($this->author));
-    $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+    $this->name = htmlspecialchars(strip_tags($this->name));
     $this->id = htmlspecialchars(strip_tags($this->id));
 
     // Bind Data
-    $stmt->bindParam(':title', $this->title);
-    $stmt->bindParam(':body', $this->body);
-    $stmt->bindParam(':author', $this->author);
-    $stmt->bindParam(':category_id', $this->category_id);
+    $stmt->bindParam(':name', $this->name);
     $stmt->bindParam(':id', $this->id);
 
     // Execute Query
